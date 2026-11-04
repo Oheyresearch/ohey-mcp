@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ca.ohey/research",
+  "title": "Ohey research",
+  "description": "Web malware techniques, kits and EtherHiding contracts from Ohey's website scans. No sign-in.",
+  "version": "1.0.0",
+  "websiteUrl": "https://ohey.ca/threats/",
+  "repository": {
+    "url": "https://github.com/Oheyresearch/ohey-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://ohey.ca/mcp/research"
+    }
+  ]
+}

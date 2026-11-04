@@ -1,18 +1,43 @@
-# Ohey MCP server
+# Ohey MCP servers
 
-Ohey lists hosts that serve web malware: compromised sites, ClickFix and fake
-update lures, skimmers, and the C2 and distribution servers behind them. This
-server gives AI agents the Ohey API as tools.
+Ohey scans websites for injected malware: ClickFix and fake update lures,
+skimmers, phishing kits, EtherHiding loaders, and the C2 and distribution
+servers behind them. There are two remote MCP servers (Streamable HTTP).
 
+| Server | URL | Sign-in |
+| --- | --- | --- |
+| Research | `https://ohey.ca/mcp/research` | None |
+| Feed and API | `https://ohey.ca/mcp` | Ohey account with API access |
+
+## Research server
+
+The research Ohey publishes on [ohey.ca/threats](https://ohey.ca/threats/),
+as tools. Anyone can connect.
+
+| Tool | What it does |
+| --- | --- |
+| `list_threats` | Every technique, with its page, a summary, site counts and its kits. |
+| `get_threat` | A technique or kit: sites matched by month, how many were still infected when rescanned, WordPress and Joomla shares, common plugins, kits seen on the same sites, its EtherHiding contracts and articles. |
+| `list_research_articles` | Research articles, newest first. |
+| `search_etherhiding_contracts` | Contracts that compromised sites read their next stage from, by kit, chain or destination host. |
+| `get_etherhiding_contract` | One contract's destinations over time. |
+| `get_feed_stats` | Feed size, last week's additions and removals, and the capture archive. |
+
+Counts update daily from Ohey's scans.
+
+**Claude Code:**
+
+```bash
+claude mcp add --transport http ohey-research https://ohey.ca/mcp/research
 ```
-https://ohey.ca/mcp
-```
 
-It's a remote server (Streamable HTTP). You sign in with your Ohey account, so
-there is no API key to copy. It needs an account with API access; ask for one
-at [ohey.ca/contact](https://ohey.ca/contact/).
+## Feed and API server
 
-## Connect
+Ohey's API as tools: look up any host, search the feed, read CVEs and scan
+URLs. You sign in with your Ohey account, so there is no API key to copy. Ask
+for an account with API access at [ohey.ca/contact](https://ohey.ca/contact/).
+
+### Connect
 
 **Claude:** Settings, Connectors, Add custom connector, then paste the URL.
 
@@ -29,7 +54,7 @@ itself.
 Signing in opens ohey.ca. Approve the connection there and the client gets
 access.
 
-## Tools
+### Tools
 
 | Tool | What it does |
 | --- | --- |
@@ -45,7 +70,7 @@ access.
 The scan tools appear only when you tick "Scan URLs" while approving. Scans
 count against your account.
 
-## Access and revoking it
+### Access and revoking it
 
 Approving a client creates an API key named after it, under Account in the
 [Ohey portal](https://ohey.ca/portal/). Tool calls are rate limited and

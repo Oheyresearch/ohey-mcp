@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "ohey-research": {
+      "type": "streamable-http",
+      "url": "https://ohey.ca/mcp/research"
+    }
+  }
+}

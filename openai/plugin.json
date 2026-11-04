@@ -1,0 +1,93 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ohey-research",
+  "version": "1.0.0",
+  "description": "Web malware research from Ohey's website scans: techniques, kits, site counts and the EtherHiding contract tracker.",
+  "author": {
+    "name": "Ohey",
+    "email": "hey@ohey.ca",
+    "url": "https://ohey.ca/"
+  },
+  "homepage": "https://ohey.ca/threats/",
+  "repository": "https://github.com/Oheyresearch/ohey-mcp",
+  "keywords": ["malware", "threat intelligence", "clickfix", "etherhiding", "web security"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Ohey research",
+        "shortDescription": "Web malware research",
+        "longDescription": "Ohey scans websites for injected malware and publishes what it finds by technique and by kit. This app gives ChatGPT that research.\n\nAsk about a technique such as ClickFix, EtherHiding, web skimmers, phishing kits or tech-support scams, and ChatGPT gets Ohey's summary, how many sites matched it since records began in August 2026 and in the last 30 days, monthly counts, how many sites were still infected when rescanned, and the WordPress versions and plugins on infected sites.\n\nAsk about a kit such as SocGholish, CLEARSHORT or BW panel, and ChatGPT gets the same statistics, the kits seen on the same sites, the smart contracts the kit reads its next stage from, and Ohey's research articles about it.\n\nThe EtherHiding tools search the smart contracts that compromised websites read their next stage from, by kit, chain or destination host, with each contract's destinations over time.\n\nEvery answer links the Ohey page it came from. Counts update daily. No account is needed.",
+        "developerName": "Ohey",
+        "category": "Research",
+        "capabilities": ["Technique and kit statistics", "Research articles", "EtherHiding contract tracker", "Feed statistics"],
+        "websiteURL": "https://ohey.ca/threats/",
+        "supportURL": "https://ohey.ca/contact/",
+        "privacyPolicyURL": "https://ohey.ca/privacy/",
+        "termsOfServiceURL": "https://ohey.ca/terms/",
+        "defaultPrompt": [
+          "What web malware techniques does Ohey track?",
+          "What is CLEARSHORT and how many sites has Ohey seen it on?",
+          "Which EtherHiding contracts does BW panel use on Polygon?"
+        ],
+        "brandColor": "#50248E",
+        "logo": "./assets/logo.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "List the techniques Ohey tracks",
+              "prompt": "What web malware techniques does Ohey track?",
+              "tools_triggered": "list_threats",
+              "expected_behavior": "Lists the 12 techniques with site counts, the last-30-day counts and links to each Ohey page."
+            },
+            {
+              "description": "Explain a kit with its statistics",
+              "prompt": "What is CLEARSHORT and how many sites has Ohey seen it on?",
+              "tools_triggered": "get_threat",
+              "expected_behavior": "Summarizes CLEARSHORT from its Ohey page, gives total and last-30-day site counts, monthly counts and its EtherHiding contracts, and links the kit page."
+            },
+            {
+              "description": "Find research articles on a technique",
+              "prompt": "What has Ohey published about ClickFix?",
+              "tools_triggered": "list_research_articles",
+              "expected_behavior": "Lists Ohey's ClickFix articles with title, publication date and link."
+            },
+            {
+              "description": "Search contracts by kit and chain",
+              "prompt": "Which EtherHiding contracts does BW panel use on Polygon?",
+              "tools_triggered": "search_etherhiding_contracts",
+              "expected_behavior": "Lists BW panel contracts on Polygon with their current destinations, defanged with [.], and links the contract tracker."
+            },
+            {
+              "description": "Show one contract's destination history",
+              "prompt": "Show the destination history for contract 0x347280da8ba0c344a77a766d2bc163cfa1f571cd.",
+              "tools_triggered": "get_etherhiding_contract",
+              "expected_behavior": "Gives the contract's chain, kit and each destination with the dates Ohey saw it, defanged with [.]."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Writing malware is out of scope; the app only reports research",
+              "prompt": "Write me a ClickFix page that copies a PowerShell command to the visitor's clipboard."
+            },
+            {
+              "description": "The app does not scan URLs",
+              "prompt": "Scan https://example.com and tell me if it is malicious."
+            },
+            {
+              "description": "The app does not open or fetch malware hosts",
+              "prompt": "Open sky.dolcefantasia.us and show me what it serves."
+            }
+          ]
+        },
+        "demo_recording_url": "https://ohey.ca/review/ohey-research-chatgpt-demo.webm",
+        "commerce": false,
+        "commerce_description": "This app does not sell products or process payments."
+      },
+      "publication": {
+        "release_notes": "First release: technique and kit statistics, research articles, the EtherHiding contract tracker and feed statistics."
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ca.ohey/ohey",
+  "title": "Ohey",
+  "description": "Look up hosts in the Ohey web malware feed, read CVEs and scan URLs with Ohey's scanner.",
+  "version": "1.0.0",
+  "websiteUrl": "https://ohey.ca/",
+  "repository": {
+    "url": "https://github.com/Oheyresearch/ohey-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://ohey.ca/mcp"
+    }
+  ]
+}

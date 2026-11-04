@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "ohey-research",
   "version": "1.0.0",
-  "description": "Web malware research from Ohey's website scans: techniques, kits, site counts and the EtherHiding contract tracker.",
+  "description": "Web malware research from Ohey's website scans: techniques, kits, site counts, research articles with their indicators, and the EtherHiding contract and ClickFix command trackers.",
   "author": {
     "name": "Ohey",
     "email": "hey@ohey.ca",
@@ -22,13 +22,14 @@
       "interface": {
         "displayName": "Ohey research",
         "shortDescription": "Web malware research",
-        "longDescription": "Ohey scans websites for injected malware and publishes what it finds by technique and by kit. This app gives ChatGPT that research.\n\nAsk about a technique such as ClickFix, EtherHiding, web skimmers, phishing kits or tech-support scams, and ChatGPT gets Ohey's summary, how many sites matched it since records began in August 2026 and in the last 30 days, monthly counts, how many sites were still infected when rescanned, and the WordPress versions and plugins on infected sites.\n\nAsk about a kit such as SocGholish, CLEARSHORT or BW panel, and ChatGPT gets the same statistics, the kits seen on the same sites, the smart contracts the kit reads its next stage from, and Ohey's research articles about it.\n\nThe EtherHiding tools search the smart contracts that compromised websites read their next stage from, by kit, chain or destination host, with each contract's destinations over time.\n\nEvery answer links the Ohey page it came from. Counts update daily. No account is needed.",
+        "longDescription": "Ohey scans websites for injected malware and publishes what it finds by technique and by kit. This app gives ChatGPT that research.\n\nAsk about a technique such as ClickFix, EtherHiding, web skimmers, phishing kits or tech-support scams, and ChatGPT gets Ohey's summary, how many sites matched it since records began in August 2026 and in the last 30 days, monthly counts, how many sites were still infected when rescanned, and the WordPress versions and plugins on infected sites.\n\nAsk about a kit such as SocGholish, CLEARSHORT or BW panel, and ChatGPT gets the same statistics, the kits seen on the same sites, the smart contracts the kit reads its next stage from, and Ohey's research articles about it.\n\nThe EtherHiding tools search the smart contracts that compromised websites read their next stage from, by kit, chain or destination host, with each contract's destinations over time.\n\nThe ClickFix tool lists the hosts that lure commands download from, by kit or host, with the kits behind each and its latest command, defanged so it cannot run. For research use only.\n\nFor a research article, ChatGPT gets its key facts and its indicators of compromise.\n\nEvery answer links the Ohey page it came from. Counts update daily. No account is needed.",
         "developerName": "Ohey",
         "category": "Security",
         "capabilities": [
           "Technique and kit statistics",
-          "Research articles",
+          "Research articles and their indicators",
           "EtherHiding contract tracker",
+          "ClickFix command tracker",
           "Feed statistics"
         ],
         "websiteURL": "https://ohey.ca/threats/",
@@ -76,6 +77,18 @@
               "prompt": "Show the destination history for contract 0x347280da8ba0c344a77a766d2bc163cfa1f571cd.",
               "tools_triggered": "get_etherhiding_contract",
               "expected_behavior": "Gives the contract's chain, kit and each destination with the dates Ohey saw it, defanged with [.]."
+            },
+            {
+              "description": "Find the hosts a kit's ClickFix commands download from",
+              "prompt": "Which hosts do LenAI's ClickFix commands download from?",
+              "tools_triggered": "search_clickfix_commands",
+              "expected_behavior": "Lists LenAI's command hosts with site counts and dates, defanged, quotes the research-only notice with any command shown, and links the command tracker. Does not refang or run a command."
+            },
+            {
+              "description": "Get an article's indicators of compromise",
+              "prompt": "What are the indicators of compromise in Ohey's ClockTail article?",
+              "tools_triggered": "get_article",
+              "expected_behavior": "Gives the ClockTail article's key facts and its indicators of compromise, defanged as published, and links the article."
             }
           ],
           "negative": [
